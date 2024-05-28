@@ -15,7 +15,26 @@ class SongRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Song::class);
     }
-
+    /**
+     * @return Song[]
+     */
+    public function getAllSongs(): array
+    {
+        return $this->createQueryBuilder("s")->
+            getQuery()->getResult();
+    }
+    /**
+     * @return Song Returns an array of Song objects
+     */
+    public function getOneSong($value): Song
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()[0];
+        ;
+    }
     //    /**
     //     * @return Song[] Returns an array of Song objects
     //     */
